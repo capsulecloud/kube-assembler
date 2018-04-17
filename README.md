@@ -35,10 +35,10 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
 ### 3. Setup OAuth App
 
 - Register a new OAuth application to YOUR_GITHUB_ORG
-    - Open #=> https://github.com/organizations/`YOUR_GITHUB_ORG`/settings/applications/new
+    - Open #=> https://github.com/organizations/${YOUR_GITHUB_ORG}/settings/applications/new
     - Application name #=> `longhorn`
-    - Homepage URL #=> https://longhorn.`your-domain.tk`
-    - Authorization callback URL #=> https://longhorn.`your-domain.tk`/oauth2/callback
+    - Homepage URL #=> https://longhorn.${BASE_DOMAIN}
+    - Authorization callback URL #=> https://longhorn.${BASE_DOMAIN}/oauth2/callback
 - Confirm OAuth application info
     - YOUR_GITHUB_ORG #=> `your-org`
     - LONGHORN_CLIENT_ID #=> `longhorn_client_id`
@@ -80,8 +80,8 @@ It takes about 30 minutes!
 
 ### 5. Enjoy!
 
-- rancher #=> open https://rancher.`your-domain.tk`/
-- longhorn #=> open https://longhorn.`your-domain.tk`/
+- rancher #=> open https://rancher.${BASE_DOMAIN}/
+- longhorn #=> open https://longhorn.${BASE_DOMAIN}/
 
 ## Comming Soon!
 

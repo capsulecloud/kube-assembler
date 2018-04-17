@@ -10,7 +10,7 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
     - Image #=> Ubuntu Xenial (16.04 latest)
     - Storage #=> 50GB LSSD
 - Start 3 nodes
-    - SSH_KEY_PATH #=> `~/.ssh/id_rsa`
+    - SSH_KEY_PATH #=> `${HOME}/.ssh/id_rsa`
     - HOST_USER #=> `root`
     - NODE01 #=> `1.1.1.1`
     - NODE02 #=> `2.2.2.2`
@@ -53,7 +53,7 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
     export NODE01=1.1.1.1
     export NODE02=2.2.2.2
     export NODE03=3.3.3.3
-    export SSH_KEY_PATH=~/.ssh/id_rsa
+    export SSH_KEY_PATH=${HOME}/.ssh/id_rsa
     export YOUR_DOMAIN=your-domain.tk
     export YOUR_GITHUB_ORG=your-org
     export LONGHORN_CLIENT_ID=longhorn_client_id

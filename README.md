@@ -5,7 +5,7 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
 
 ### 1. Create servers
 
-- Select node spec (ex. [scaleway](https://www.scaleway.com/))
+- Select node spec (e.g. [scaleway](https://www.scaleway.com/))
     - Server Type #=> VC1S (2 X86 64bit Cores, 2GB memory, 200Mbit/s Unmetered)
     - Image #=> Ubuntu Xenial (16.04 latest)
     - Storage #=> 50GB LSSD
@@ -21,7 +21,7 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
 
 ### 2. Setup domain
 
-- Select target domain (ex. [freenom](http://www.freenom.com/))
+- Select target domain (e.g. [freenom](http://www.freenom.com/))
     - BASE_DOMAIN #=> `your-domain.tk`
 - Register glue records
     - ns1.ns.dns.`your-domain.tk` #=> `1.1.1.1`

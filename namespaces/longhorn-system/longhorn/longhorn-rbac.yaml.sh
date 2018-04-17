@@ -1,0 +1,66 @@
+#!/bin/bash
+
+NAMESPACE=${NAMESPACE:-longhorn-system}
+
+cat <<EOL
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: longhorn-service-account
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: longhorn-role
+rules:
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - "*"
+- apiGroups: [""]
+  resources: ["pods", "events", "persistentvolumes", "persistentvolumeclaims", "nodes", "proxy/nodes"]
+  verbs: ["*"]
+- apiGroups: ["extensions"]
+  resources: ["daemonsets"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources: ["jobs", "cronjobs"]
+  verbs: ["*"]
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses"]
+  verbs: ["*"]
+- apiGroups: ["longhorn.rancher.io"]
+  resources: ["nodes"]
+  verbs: ["*"]
+- apiGroups: ["longhorn.rancher.io"]
+  resources: ["volumes"]
+  verbs: ["*"]
+- apiGroups: ["longhorn.rancher.io"]
+  resources: ["engines"]
+  verbs: ["*"]
+- apiGroups: ["longhorn.rancher.io"]
+  resources: ["replicas"]
+  verbs: ["*"]
+- apiGroups: ["longhorn.rancher.io"]
+  resources: ["settings"]
+  verbs: ["*"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: longhorn-bind
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: longhorn-role
+subjects:
+- kind: ServiceAccount
+  name: longhorn-service-account
+  namespace: $NAMESPACE
+EOL

@@ -34,6 +34,8 @@ do
   sleep 1s;
 done
 
+sleep 60s;
+
 ## Create etcd path
 domain=(`echo $TARGET_DOMAIN | tr -s '.' ' '`)
 reverse=""

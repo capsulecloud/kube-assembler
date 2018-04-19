@@ -16,16 +16,6 @@ fi
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
 
-## Wait until etcd-cluster available
-echo 'Wait until etcd-cluster available'
-while :
-do
-  if [ $(eval "${KUBECTL} get po | grep etcd-cluster | awk 'NR==1{print \$3}' | grep -e 'Running'") ]; then
-    break    
-  fi
-  sleep 1s;
-done
-
 ## issue certificate
 certbot certonly --manual \
 -d *.$TARGET_DOMAIN \

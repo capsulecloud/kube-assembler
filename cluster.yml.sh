@@ -50,7 +50,7 @@ nodes:
   labels: {}
 services:
   etcd:
-    image: rancher/coreos-etcd:v3.0.17
+    image: rancher/coreos-etcd:v3.1.12
     extra_args: {}
     extra_binds: []
     external_urls: []
@@ -59,35 +59,35 @@ services:
     key: ""
     path: ""
   kube-api:
-    image: rancher/k8s:v1.8.10-rancher1-1
+    image: rancher/hyperkube:v1.10.1-rancher2
     extra_args: {}
     extra_binds: []
     service_cluster_ip_range: 10.43.0.0/16
     pod_security_policy: false
   kube-controller:
-    image: rancher/k8s:v1.8.10-rancher1-1
+    image: rancher/hyperkube:v1.10.1-rancher2
     extra_args: {}
     extra_binds: []
     cluster_cidr: 10.42.0.0/16
     service_cluster_ip_range: 10.43.0.0/16
   scheduler:
-    image: rancher/k8s:v1.8.10-rancher1-1
+    image: rancher/hyperkube:v1.10.1-rancher2
     extra_args: {}
     extra_binds: []
   kubelet:
-    image: rancher/k8s:v1.8.10-rancher1-1
+    image: rancher/hyperkube:v1.10.1-rancher2
     extra_args: {}
     extra_binds: []
     cluster_domain: cluster.local
-    infra_container_image: rancher/pause-amd64:3.0
+    infra_container_image: rancher/pause-amd64:3.1
     cluster_dns_server: 10.43.0.10
     fail_swap_on: false
   kubeproxy:
-    image: rancher/k8s:v1.8.10-rancher1-1
+    image: rancher/hyperkube:v1.10.1-rancher2
     extra_args: {}
     extra_binds: []
 network:
-  plugin: flannel
+  plugin: canal
   options: {}
 authentication:
   strategy: x509
@@ -120,11 +120,6 @@ system_images:
   pod_infra_container: ""
   ingress: ""
   ingress_backend: ""
-  dashboard: ""
-  heapster: ""
-  grafana: ""
-  influxdb: ""
-  tiller: ""
 ssh_key_path: ~/.ssh/id_rsa
 ssh_agent_auth: false
 authorization:
@@ -137,8 +132,10 @@ ingress:
   provider: ""
   options: {}
   node_selector: {}
+  extra_args: {}
 cluster_name: ""
 cloud_provider:
   name: ""
   cloud_config: {}
+prefix_path: ""
 EOL

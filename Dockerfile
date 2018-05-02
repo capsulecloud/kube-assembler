@@ -2,7 +2,7 @@ FROM certbot/certbot
 
 LABEL maintainer Kazuhito Yamazawa <yamazawa@supersoftware.co.jp>
 
-ARG KUBECTL_VERSION="v1.9.6"
+ARG KUBECTL_VERSION="v1.10.2"
 ARG RKE_VERSION="v0.1.6"
 ARG STERN_VERSION="1.6.0"
 

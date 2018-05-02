@@ -12,10 +12,10 @@ KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
 KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "./longhorn-crd.yaml" | eval "${KUBE_APPLY}"
+eval "./longhorn-crd.yaml.sh" | eval "${KUBE_APPLY}"
 eval "./longhorn-rbac.yaml.sh" | eval "${KUBE_APPLY}"
-eval "./longhorn.yaml" | eval "${KUBE_APPLY}"
-eval "./longhorn-storageclass.yaml" | eval "${KUBE_APPLY}"
+eval "./longhorn.yaml.sh" | eval "${KUBE_APPLY}"
+eval "./longhorn-storageclass.yaml.sh" | eval "${KUBE_APPLY}"
 
 ## Wait until longhorn available
 echo 'Wait until longhorn available'

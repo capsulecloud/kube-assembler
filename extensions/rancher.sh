@@ -23,12 +23,12 @@ LONGHORN_CLIENT_ID=${LONGHORN_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
 LONGHORN_CLIENT_SECRET=${LONGHORN_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
 
 ## Assemble cattle-system
-print_green "Starting setup gogs"
+print_green "Starting setup cattle-system"
 eval "TARGET_DOMAIN=${BASE_DOMAIN} TARGET_HOSTS=${TARGET_HOSTS} ../namespaces/cattle-system/ingress/apply.sh"
 eval "TARGET_DOMAIN=${BASE_DOMAIN} ../namespaces/cattle-system/rancher/apply.sh"
 
 ## Assemble longhorn-system with OAuth
-print_green "Starting setup gogs"
+print_green "Starting setup longhorn-system"
 eval "TARGET_DOMAIN=${BASE_DOMAIN} TARGET_HOSTS=${TARGET_HOSTS} ../namespaces/longhorn-system/ingress/apply.sh"
 eval "GITHUB_ORG=${GITHUB_ORG} CLIENT_ID=${LONGHORN_CLIENT_ID} CLIENT_SECRET=${LONGHORN_CLIENT_SECRET} COOKIE_SECRET=${cookie_secret} ../namespaces/longhorn-system/auth/apply.sh"
 eval "../namespaces/longhorn-system/longhorn/apply.sh"

@@ -12,6 +12,9 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     external-dns.alpha.kubernetes.io/target: $TARGET_HOSTS
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"   # Max time in seconds for ws to remain shell window open
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"   # Max time in seconds for ws to remain shell window openspec:
 spec:
   tls:
   - hosts:

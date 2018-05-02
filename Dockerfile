@@ -3,7 +3,7 @@ FROM certbot/certbot
 LABEL maintainer Kazuhito Yamazawa <yamazawa@supersoftware.co.jp>
 
 ARG KUBECTL_VERSION="v1.9.6"
-ARG RKE_VERSION="v0.1.5"
+ARG RKE_VERSION="v0.1.6"
 ARG STERN_VERSION="1.6.0"
 
 RUN apk --update add ca-certificates git openssh curl jq bash-completion ruby ruby-rake ruby-io-console ruby-bundler docker make bash bind-tools && \

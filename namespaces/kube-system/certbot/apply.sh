@@ -9,12 +9,11 @@ ACME_ENDPOINT=${ACME_ENDPOINT:-https://acme-staging-v02.api.letsencrypt.org/dire
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-kube-system}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 ## issue certificate
 certbot certonly --manual \

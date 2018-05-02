@@ -10,13 +10,12 @@ COOKIE_SECRET=${COOKIE_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXX}
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-longhorn-system}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "CLIENT_ID=${CLIENT_ID} CLIENT_SECRET=${CLIENT_SECRET} COOKIE_SECRET=${COOKIE_SECRET} ./domain-secret.yaml.sh" | eval "${KUBECTL} apply -f -"
-eval "GITHUB_ORG=${GITHUB_ORG} ./oauth2-proxy.yaml.sh" | eval "${KUBECTL} apply -f -"
+eval "CLIENT_ID=${CLIENT_ID} CLIENT_SECRET=${CLIENT_SECRET} COOKIE_SECRET=${COOKIE_SECRET} ./domain-secret.yaml.sh" | eval "${KUBE_APPLY}"
+eval "GITHUB_ORG=${GITHUB_ORG} ./oauth2-proxy.yaml.sh" | eval "${KUBE_APPLY}"

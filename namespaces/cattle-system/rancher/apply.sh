@@ -5,15 +5,14 @@ cd "$CDIR"
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-cattle-system}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "NAMESPACE=${NAMESPACE} ./rancher.yml.sh" | eval "${KUBECTL} apply -f -"
+eval "NAMESPACE=${NAMESPACE} ./rancher.yml.sh" | eval "${KUBE_APPLY}"
 
 ## Wait until rancher available
 echo 'Wait until rancher available'

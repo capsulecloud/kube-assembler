@@ -27,5 +27,4 @@ spec:
       - backend:
           serviceName: cattle-service
           servicePort: 443
-
 EOL

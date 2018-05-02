@@ -5,16 +5,15 @@ cd "$CDIR"
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-kube-system}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "NAMESPACE=${NAMESPACE} ./etcd-operator-rbac.yaml.sh" | eval "${KUBECTL} apply -f -"
-eval "${KUBECTL} apply -f etcd-operator.yaml"
+eval "NAMESPACE=${NAMESPACE} ./etcd-operator-rbac.yaml.sh" | eval "${KUBE_APPLY}"
+eval "./etcd-operator.yaml.sh" | eval "${KUBE_APPLY}"
 until [ "$(eval "${KUBECTL} get crd | grep etcdclusters.etcd.database.coreos.com | awk '{print \$1}'")" != "" ]; do sleep 1s; done
-eval "${KUBECTL} apply -f etcd-cluster.yaml"
+eval "./etcd-cluster.yaml.sh" | eval "${KUBE_APPLY}"
 

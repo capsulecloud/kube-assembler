@@ -7,12 +7,11 @@ DNS_NAMESPACE=${DNS_NAMESPACE:-kube-system}
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-ingress-nginx}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "DNS_NAMESPACE=${DNS_NAMESPACE} ./ingress-nginx-configmap.yaml.sh" | eval "${KUBECTL} apply -f -"
+eval "DNS_NAMESPACE=${DNS_NAMESPACE} ./ingress-nginx-configmap.yaml.sh" | eval "${KUBE_APPLY}"

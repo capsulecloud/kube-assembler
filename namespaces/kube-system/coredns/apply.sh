@@ -12,17 +12,16 @@ TARGET_HOSTS=${TARGET_HOSTS:-1.1.1.1,2.2.2.2,3.3.3.3}
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-kube-system}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "NAMESPACE=${NAMESPACE} ./coredns-rbac.yaml.sh" | eval "${KUBECTL} apply -f -"
-eval "NAMESPACE=${NAMESPACE} ./coredns-configmap.yaml.sh" | eval "${KUBECTL} apply -f -"
-eval "${KUBECTL} apply -f coredns.yaml"
+eval "NAMESPACE=${NAMESPACE} ./coredns-rbac.yaml.sh" | eval "${KUBE_APPLY}"
+eval "NAMESPACE=${NAMESPACE} ./coredns-configmap.yaml.sh" | eval "${KUBE_APPLY}"
+eval "./coredns.yaml.sh" | eval "${KUBE_APPLY}"
 
 ## Wait until etcd-cluster available
 echo 'Wait until etcd-cluster available'

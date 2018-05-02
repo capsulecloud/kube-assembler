@@ -1,3 +1,6 @@
+#!/bin/bash
+
+cat <<EOL
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -46,4 +49,4 @@ spec:
             items:
             - key: Corefile
               path: Corefile
-
+EOL

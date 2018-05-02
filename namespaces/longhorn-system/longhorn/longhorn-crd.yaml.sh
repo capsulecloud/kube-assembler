@@ -1,3 +1,6 @@
+#!/bin/bash
+
+cat <<EOL
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
@@ -75,3 +78,4 @@ spec:
     singular: volume
   scope: Namespaced
   version: v1alpha1
+EOL

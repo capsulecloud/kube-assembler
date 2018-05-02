@@ -1,3 +1,6 @@
+#!/bin/bash
+
+cat <<EOL
 apiVersion: "etcd.database.coreos.com/v1beta2"
 kind: "EtcdCluster"
 metadata:
@@ -9,3 +12,4 @@ metadata:
 spec:
   size: 3
   version: "3.2.13"
+EOL

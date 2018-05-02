@@ -5,18 +5,17 @@ cd "$CDIR"
 
 # Create namespace if not exist
 NAMESPACE=${NAMESPACE:-longhorn-system}
-if [ "$(eval "kubectl get ns | grep \"${NAMESPACE}\" | awk '{print \$1}'")" != "${NAMESPACE}" ]; then
-  eval "kubectl create namespace \"${NAMESPACE}\""
-fi
+eval "kubectl create namespace ${NAMESPACE}"
 
 # Set command scope
 KUBECTL="kubectl --namespace=\"${NAMESPACE}\""
+KUBE_APPLY="${KUBECTL} apply -f -"
 
 # Deploy
-eval "${KUBECTL} create --save-config -f longhorn-crd.yaml"
-eval "./longhorn-rbac.yaml.sh" | eval "${KUBECTL} apply -f -"
-eval "${KUBECTL} create --save-config -f longhorn.yaml"
-eval "${KUBECTL} create --save-config -f longhorn-storageclass.yaml"
+eval "./longhorn-crd.yaml" | eval "${KUBE_APPLY}"
+eval "./longhorn-rbac.yaml.sh" | eval "${KUBE_APPLY}"
+eval "./longhorn.yaml" | eval "${KUBE_APPLY}"
+eval "./longhorn-storageclass.yaml" | eval "${KUBE_APPLY}"
 
 ## Wait until longhorn available
 echo 'Wait until longhorn available'

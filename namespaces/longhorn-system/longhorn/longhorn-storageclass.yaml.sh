@@ -1,3 +1,6 @@
+#!/bin/bash
+
+cat <<EOL
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -7,3 +10,4 @@ parameters:
   numberOfReplicas: "3"
   staleReplicaTimeout: "30"
   fromBackup: ""
+EOL

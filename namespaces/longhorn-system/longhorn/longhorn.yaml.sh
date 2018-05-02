@@ -1,3 +1,6 @@
+#!/bin/bash
+
+cat <<EOL
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
@@ -173,3 +176,4 @@ spec:
             #FOR GKE
             #value: "/home/kubernetes/flexvolume/"
       serviceAccountName: longhorn-service-account
+EOL

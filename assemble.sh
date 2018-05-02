@@ -18,10 +18,10 @@ if [ ! $SKIP_NODE_SETUP ]; then
 
   ## Setup nodes
   for i in "${!nodes[@]}"; do
-      ssh -o StrictHostKeyChecking=no $HOST_USER@${nodes[$i]} "curl $INSTALL_DOCKER | sh" # Install Docker
-      ssh $HOST_USER@${nodes[$i]} "sudo usermod -aG docker $HOST_USER" # Add user to Docker group
-      ssh $HOST_USER@${nodes[$i]} "sudo apt-get install -y ntp && sudo ntpq -p" # Enabling ntpd time sync
-      ssh $HOST_USER@${nodes[$i]} "sudo apt-get install -y open-iscsi" # Install open-iscsi for longhorn dependency
+    ssh -o StrictHostKeyChecking=no $HOST_USER@${nodes[$i]} "curl $INSTALL_DOCKER | sh" # Install Docker
+    ssh $HOST_USER@${nodes[$i]} "sudo usermod -aG docker $HOST_USER" # Add user to Docker group
+    ssh $HOST_USER@${nodes[$i]} "sudo apt-get install -y ntp && sudo ntpq -p" # Enabling ntpd time sync
+    ssh $HOST_USER@${nodes[$i]} "sudo apt-get install -y open-iscsi" # Install open-iscsi for longhorn dependency
   done
 
   ## Write RKE config (cluster.yml)
@@ -54,22 +54,30 @@ fi
 
 ## Extensions
 
-### Add rancher.sh
-LONGHORN_CLIENT_ID=${LONGHORN_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
-LONGHORN_CLIENT_SECRET=${LONGHORN_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-eval "GITHUB_ORG=${GITHUB_ORG} LONGHORN_CLIENT_ID=${LONGHORN_CLIENT_ID} LONGHORN_CLIENT_SECRET=${LONGHORN_CLIENT_SECRET} extensions/rancher.sh"
+if [ $RANCHER ]; then
+  ### Add rancher.sh
+  LONGHORN_CLIENT_ID=${LONGHORN_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
+  LONGHORN_CLIENT_SECRET=${LONGHORN_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+  eval "GITHUB_ORG=${GITHUB_ORG} LONGHORN_CLIENT_ID=${LONGHORN_CLIENT_ID} LONGHORN_CLIENT_SECRET=${LONGHORN_CLIENT_SECRET} extensions/rancher.sh"
+fi
 
-# ### Add maintenability.sh
-# WEAVE_CLIENT_ID=${WEAVE_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
-# WEAVE_CLIENT_SECRET=${WEAVE_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-# eval "GITHUB_ORG=${GITHUB_ORG} WEAVE_CLIENT_ID=${WEAVE_CLIENT_ID} WEAVE_CLIENT_SECRET=${WEAVE_CLIENT_SECRET} extensions/maintenability.sh"
+if [ $MAINTENABILITY ]; then
+  ### Add maintenability.sh
+  WEAVE_CLIENT_ID=${WEAVE_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
+  WEAVE_CLIENT_SECRET=${WEAVE_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+  eval "GITHUB_ORG=${GITHUB_ORG} WEAVE_CLIENT_ID=${WEAVE_CLIENT_ID} WEAVE_CLIENT_SECRET=${WEAVE_CLIENT_SECRET} extensions/maintenability.sh"
+fi
 
-# ### Add sustainability.sh
-# REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
-# REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-# eval "GITHUB_ORG=${GITHUB_ORG} REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID} REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET} extensions/sustainability.sh"
+if [ $SUSTAINABILITY ]; then
+  ### Add sustainability.sh
+  REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
+  REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+  eval "GITHUB_ORG=${GITHUB_ORG} REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID} REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET} extensions/sustainability.sh"
+fi
 
-# ### Add productivity.sh
-# FAAS_CLIENT_ID=${FAAS_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
-# FAAS_CLIENT_SECRET=${FAAS_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
-# eval "GITHUB_ORG=${GITHUB_ORG} FAAS_CLIENT_ID=${FAAS_CLIENT_ID} FAAS_CLIENT_SECRET=${FAAS_CLIENT_SECRET} extensions/productivity.sh"
+if [ $PRODUCTIVITY ]; then
+  ### Add productivity.sh
+  FAAS_CLIENT_ID=${FAAS_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
+  FAAS_CLIENT_SECRET=${FAAS_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
+  eval "GITHUB_ORG=${GITHUB_ORG} FAAS_CLIENT_ID=${FAAS_CLIENT_ID} FAAS_CLIENT_SECRET=${FAAS_CLIENT_SECRET} extensions/productivity.sh"
+fi

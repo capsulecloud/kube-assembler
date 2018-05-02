@@ -63,8 +63,12 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
     export SSH_KEY_PATH=${HOME}/.ssh/id_rsa
     export YOUR_DOMAIN=your-domain.tk
     export YOUR_GITHUB_ORG=your-org
+    export RANCHER=true
     export LONGHORN_CLIENT_ID=longhorn_client_id
     export LONGHORN_CLIENT_SECRET=longhorn_client_secret
+    export MAINTENABILITY=true
+    export WEAVE_CLIENT_ID=weave_client_id
+    export WEAVE_CLIENT_SECRET=weave_client_secret
     EOL)
     ```
 
@@ -78,8 +82,12 @@ Assemble SSL/TLS enabled kubernetes cluster powered by [rancher/rke](https://git
     -v ${SSH_KEY_PATH}:/root/.ssh/id_rsa \
     -e "BASE_DOMAIN=${YOUR_DOMAIN}" \
     -e "GITHUB_ORG=${YOUR_GITHUB_ORG}" \
+    -e "RANCHER=${RANCHER}" \
     -e "LONGHORN_CLIENT_ID=${LONGHORN_CLIENT_ID}" \
     -e "LONGHORN_CLIENT_SECRET=${LONGHORN_CLIENT_SECRET}" \
+    -e "MAINTENABILITY=${MAINTENABILITY}" \
+    -e "WEAVE_CLIENT_ID=${WEAVE_CLIENT_ID}" \
+    -e "WEAVE_CLIENT_SECRET=${WEAVE_CLIENT_SECRET}" \
     capsulecloud/kube-assembler
     ```
 

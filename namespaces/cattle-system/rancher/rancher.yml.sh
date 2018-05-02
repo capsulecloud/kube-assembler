@@ -3,14 +3,21 @@
 NAMESPACE=${NAMESPACE:-cattle-system}
 
 cat <<EOL
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: cattle-admin
+
+--- 
+
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: cattle-crb
 subjects:
-- kind: User
-  name: system:serviceaccount:$NAMESPACE:default
-  apiGroup: rbac.authorization.k8s.io
+- kind: ServiceAccount
+  name: cattle-admin
+  namespace: $NAMESPACE
 roleRef:
   kind: ClusterRole
   name: cluster-admin
@@ -50,8 +57,9 @@ spec:
       labels:
         app: cattle
     spec:
+      serviceAccountName: cattle-admin
       containers:
-      - image: rancher/server:master
+      - image: rancher/rancher:master
         imagePullPolicy: Always
         name: cattle-server
         ports:

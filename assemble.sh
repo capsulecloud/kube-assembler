@@ -19,6 +19,7 @@ nodes=(`echo $TARGET_HOSTS | tr -s ',' ' '`)
 for i in "${!nodes[@]}"; do
     ssh -o StrictHostKeyChecking=no $HOST_USER@${nodes[$i]} "curl $INSTALL_DOCKER | sh" # Install Docker
     ssh $HOST_USER@${nodes[$i]} "sudo usermod -aG docker $HOST_USER" # Add user to Docker group
+    ssh $HOST_USER@${nodes[$i]} "sudo apt-get install -y ntp && sudo ntpq -p" # Enabling ntpd time sync
     ssh $HOST_USER@${nodes[$i]} "sudo apt-get install -y open-iscsi" # Install open-iscsi for longhorn dependency
 done
 

@@ -22,23 +22,22 @@ cookie_secret=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
 REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID:-XXXXXXXXXXXXXXXXXXX}
 REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET:-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}
 
-## Assemble cattle-system
+## Assemble sustainability
+print_green "Starting setup ingress"
+eval "TARGET_DOMAIN=${BASE_DOMAIN} TARGET_HOSTS=${TARGET_HOSTS} ../namespaces/sustainability/ingress/apply.sh"
+eval "GITHUB_ORG=${GITHUB_ORG} REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID} REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET} ../namespaces/sustainability/auth/apply.sh"
+
 print_green "Starting setup registry"
-eval "TARGET_DOMAIN=${BASE_DOMAIN} TARGET_HOSTS=${TARGET_HOSTS} ./registry/ingress/apply.sh"
-eval "GITHUB_ORG=${GITHUB_ORG} REGISTRY_CLIENT_ID=${REGISTRY_CLIENT_ID} REGISTRY_CLIENT_SECRET=${REGISTRY_CLIENT_SECRET} ./registry/auth/apply.sh"
-eval "TARGET_DOMAIN=${BASE_DOMAIN} ./registry/kube-registry/apply.sh"
+eval "TARGET_DOMAIN=${BASE_DOMAIN} ../namespaces/sustainability/kube-registry/apply.sh"
 
-## Assemble cattle-system
 print_green "Starting setup gogs"
-eval "TARGET_DOMAIN=${BASE_DOMAIN} TARGET_HOSTS=${TARGET_HOSTS} ./vsc/ingress/apply.sh"
-eval "TARGET_DOMAIN=${BASE_DOMAIN} ./vsc/gogs/apply.sh"
+eval "TARGET_DOMAIN=${BASE_DOMAIN} ../namespaces/sustainability/gogs/apply.sh"
 
-## Assemble cattle-system
-print_green "Starting setup drone"
-eval "TARGET_DOMAIN=${BASE_DOMAIN} TARGET_HOSTS=${TARGET_HOSTS} ./cicd/ingress/apply.sh"
-eval "TARGET_DOMAIN=${BASE_DOMAIN} ./cicd/drone/apply.sh"
+# print_green "Starting setup drone"
+# eval "TARGET_DOMAIN=${BASE_DOMAIN} ../namespaces/sustainability/drone/apply.sh"
 
 ## Finish
 print_green "Congratulations!"
-print_green "open https://rancher.${BASE_DOMAIN}/"
-print_green "open https://longhorn.${BASE_DOMAIN}/"
+print_green "open https://auth.${BASE_DOMAIN}/github_auth"
+print_green "open https://gogs.${BASE_DOMAIN}/"
+# print_green "open https://drone.${BASE_DOMAIN}/"

@@ -172,7 +172,7 @@ spec:
               fieldRef:
                 fieldPath: spec.nodeName
           - name: FLEXVOLUME_DIR
-            value: ""
+            value: "/var/lib/kubelet/volumeplugins"
             #FOR GKE
             #value: "/home/kubernetes/flexvolume/"
       serviceAccountName: longhorn-service-account

@@ -38,14 +38,13 @@ spec:
     spec:
       containers:
       - args:
-        - --provider=github
+        - --provider=gitlab
         - --email-domain=*
-        - --github-org=$GITHUB_ORG
-        # - --github-team=""
         - --upstream=file:///dev/null
         - --http-address=0.0.0.0:4180
-        # Register a new application
-        # https://github.com/settings/applications/new
+        - --login-url=https://gitlab.com/oauth/authorize 
+        - --redeem-url=https://gitlab.com/oauth/token 
+        - --validate-url=https://gitlab.com/api/v4/user
         env:
         - name: OAUTH2_PROXY_CLIENT_ID
           valueFrom:
